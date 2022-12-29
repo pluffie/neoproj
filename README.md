@@ -63,7 +63,7 @@ But Neoproj doesn't save sessions automatically, so you need to write
     callback = function()
       if vim.g.project_root ~= nil then
         require "neoproj".save_session()
-      end,
+      end
     end,
   })
   ```
