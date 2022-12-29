@@ -1,0 +1,107 @@
+*neoproj.txt*           For Neovim >= 0.8.0       Last change: 2022 December 29
+
+===============================================================================
+1. Configuration                                        *neoproj-configuration*
+
+setup({config})                                               *neoproj.setup()*
+    Change Neoproj options.
+
+    Example (Lua): defaults >lua
+        require "neoproj".setup {
+            project_path = "~/projects",
+        }
+<
+    Parameters: ~
+      • {config}    Map defining Neoproj configuration. Keys:
+                    • project_path: Directory which contains all of your
+                      projects. Defsults to `"~/projects"`.
+
+
+===============================================================================
+2. Projects                                                  *neoproj-projects*
+
+GLOBALS                                              *neoproj-projects-globals*
+    *g:project_root*    Contains path of last project's root directory.
+
+COMMANDS                                            *neoproj-projects-commands*
+    :ProjectNew                                                   *:ProjectNew*
+        Creates new project from template.
+
+        Also known as |neoproj.new_project()|
+
+        See also: ~
+            |neoproj-templates|
+            |neoproj.register_template()|
+
+
+    :ProjectOpen {*name}                                         *:ProjectOpen*
+        Opens project.
+
+        In this case "open project" means following:
+            1. `:cd` into project directory.
+            2. set `g:project_root` to project directory.
+            3. Check if `.nvim/session.vim` exists in project directory. If exists
+               then load it else `:edit` project directory.
+
+        Also known as |neoproj.open_project()|
+
+
+LUA API                                                  *neoproj-projects-api*
+    new_project()                                       *neoproj.new_project()*
+        Same as |:ProjectNew|.
+
+        See also: ~
+            |neoproj-templates|
+            |neoproj.register_template()|
+
+
+    open_project({*name})                              *neoproj.open_project()*
+        Same as |:ProjectOpen|.
+
+
+===============================================================================
+3. Templates                                                *neoproj-templates*
+
+register_template({template})                     *neoproj.register_template()*
+    Adds {template} into templates table.
+
+    Example (Lua): empty git project >lua
+        require "neoproj".register_template {
+            name = "Empty project (Git)",
+            expand = "git init",
+        }
+<
+
+    Parameters: ~
+      • {template}  Template specification. Keys:
+                    • name: Name of template. Shown when selecting template.
+                    • expand: String or function to populate project:
+                      • string: Interpreted as shell command. Executed with
+                                |os.execute()|.
+                      • function: Called with |g:project_root| as parameter.
+
+
+===============================================================================
+4. Sessions                                                  *neoproj-sessions*
+
+COMMANDS                                            *neoproj-sessions-commands*
+    :ProjectSaveSession                                   *:ProjectSaveSession*
+        Same as `:mksession! .nvim/session.vim` when |:pwd| equals
+        |g:project_root|.
+
+        Also known as |neoproj.save_session()|.
+
+        See also: ~
+            |:ProjectOpen|
+            |:mksession|
+
+
+LUA API                                                  *neoproj-sessions-api*
+    save_session()                                     *neoproj.save_session()*
+        Same as |:ProjectSaveSession|.
+
+        See also: ~
+            |:ProjectOpen|
+            |:mksession|
+
+vim:tw=78:ts=8:et:ft=help:norl:sw=4:sts=4:
