@@ -19,7 +19,7 @@ Small yet powerful project manager for Neovim written in fennel.
   ```lua
   {
     "pluffie/neoproj",
-    cmd = [ "ProjectOpen", "ProjectNew" ],
+    cmd = { "ProjectOpen", "ProjectNew" },
   }
   ```
 
