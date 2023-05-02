@@ -59,7 +59,7 @@ But Neoproj doesn't save sessions automatically, so you need to write
 
 - Lua
   ```lua
-  vim.api.nvim_create_autocmd(["VimLeavePre"], {
+  vim.api.nvim_create_autocmd({"VimLeavePre"}, {
     callback = function()
       if vim.g.project_root ~= nil then
         require "neoproj".save_session()
